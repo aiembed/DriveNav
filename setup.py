@@ -6,10 +6,10 @@ setup(
     description='Intelligent route scanning engine',
     author='Dr. Sid Ryan',
     author_email='sid@aiembed.com',
-    py_modules=['drive-nav'],
+    py_modules=['drive_nav'],
     entry_points={
         'console_scripts': [
-            'drive-nav=drive-nav:main'
+            'drive-nav=drive_nav:main'
         ]
     },
     install_requires=[
