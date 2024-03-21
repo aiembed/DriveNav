@@ -1,7 +1,6 @@
 import os
 import subprocess
 import shutil
-import time
 
 def install_requirements():
     # Import GPG key manually (if necessary)
@@ -53,6 +52,9 @@ def execute_main_script():
     subprocess.run(["sudo", "systemctl", "enable", "start.service"])
     subprocess.run(["sudo", "systemctl", "start", "start.service"])
     print("Setup completed.")
+    
+    # Run main.py
+    subprocess.run(["sudo", "python3", "/home/pi/start.py"])
 
 def main():
     # Install requirements
@@ -67,10 +69,6 @@ def main():
 
     # Execute main.py after reboot
     execute_main_script()
-
-    # Loop to keep the script running
-    while True:
-        time.sleep(1)  # Sleep to avoid high CPU usage
 
 if __name__ == "__main__":
     main()
