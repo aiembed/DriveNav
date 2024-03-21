@@ -1,22 +1,14 @@
 import os
 import subprocess
 import shutil
-import time
 
 def install_requirements():
     # Import GPG key manually (if necessary)
     subprocess.run(["sudo", "apt-key", "adv", "--keyserver", "keyserver.ubuntu.com", "--recv-keys", "B53DC80D13EDEF05"])
 
-    # Retry if unable to lock directory
-    for _ in range(10):  # Retry 10 times
-        try:
-            # Run apt-get update and install required packages with sudo
-            subprocess.run(["sudo", "apt-get", "update"])
-            subprocess.run(["sudo", "apt-get", "install", "-y", "python3-pip", "python3-picamera"])
-            break  # Break out of the retry loop if successful
-        except subprocess.CalledProcessError:
-            print("Failed to update package lists. Retrying in 5 seconds...")
-            time.sleep(5)
+    # Run apt-get update and install required packages with sudo
+    subprocess.run(["sudo", "apt-get", "update"])
+    subprocess.run(["sudo", "apt-get", "install", "-y", "python3-pip", "python3-picamera"])
 
 def create_systemd_service(script_path):
     # Create systemd service file with elevated privileges for apt-get commands
@@ -60,7 +52,7 @@ def execute_main_script():
     subprocess.run(["sudo", "systemctl", "enable", "start.service"])
     subprocess.run(["sudo", "systemctl", "start", "start.service"])
     print("Setup completed.")
-
+    
     # Run main.py
     subprocess.run(["sudo", "python3", "/home/pi/start.py"])
 
