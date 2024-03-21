@@ -2,6 +2,7 @@ import os
 import subprocess
 import shutil
 import time
+import main  # Import the main module
 
 def install_requirements():
     # Import GPG key manually (if necessary)
@@ -61,8 +62,8 @@ def execute_main_script():
     subprocess.run(["sudo", "systemctl", "start", "start.service"])
     print("Setup completed.")
 
-    # Run main.py
-    subprocess.run(["sudo", "python3", "/home/pi/start.py"])
+    # Run main.py directly
+    main.main()  # Call the main function from the main module
 
 def main():
     # Install requirements
