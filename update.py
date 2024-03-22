@@ -19,7 +19,7 @@ def update_package(owner, repo):
         installed_version = get_installed_version()
         if installed_version != latest_version:
             # Construct package specifier
-            package_specifier = f"{owner}/{repo}=={latest_version}"
+            package_specifier = f"git+https://github.com/{owner}/{repo}.git@{latest_version}"
             # Perform the update process
             subprocess.run(["pip", "install", "--upgrade", package_specifier])
             print("Package updated successfully!")
