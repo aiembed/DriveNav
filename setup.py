@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='drive-nav',
-    version='1.0',
+    version='1.0.0',
     description='Intelligent route scanning engine',
     author='Dr. Sid Ryan',
     author_email='sid@aiembed.com',
