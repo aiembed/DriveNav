@@ -28,7 +28,7 @@ LATEST_RELEASE_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
 LATEST_RELEASE=$(curl -s "$LATEST_RELEASE_URL" | jq -r '.tag_name')
 
 # Construct the download URL for the Python script
-SCRIPT_URL="https://raw.githubusercontent.com/$OWNER/$REPO/$LATEST_RELEASE/main.py"
+SCRIPT_URL="https://raw.githubusercontent.com/$OWNER/$REPO/$LATEST_RELEASE/$SCRIPT_NAME"
 
 # Change to the desired directory
 cd ~/DriveNav || exit
