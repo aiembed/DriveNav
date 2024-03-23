@@ -1,7 +1,20 @@
 #!/bin/bash
 
+# Function to install jq if not already installed
+install_jq() {
+    if ! command -v jq &> /dev/null; then
+        echo "jq is not installed. Installing..."
+        sudo apt-get update
+        sudo apt-get install -y jq
+        echo "jq installed successfully."
+    fi
+}
+
 # Set execute permission for the script
 chmod +x "$0"
+
+# Install jq
+install_jq
 
 # Define variables
 OWNER="aiembed"
