@@ -19,9 +19,9 @@ install_jq
 # Define variables
 OWNER="aiembed"
 REPO="DriveNav"
-SCRIPT_NAME="main.py"
+SCRIPT_NAME="start.py"
 SERVICE_NAME="myscript.service"
-SERVICE_CONTENT="[Unit]\nDescription=My Script Service\nAfter=multi-user.target\n\n[Service]\nType=idle\nExecStart=/usr/bin/python3 /home/pi/DriveNav/$SCRIPT_NAME\n\n[Install]\nWantedBy=multi-user.target"
+SERVICE_CONTENT="[Unit]\nDescription=Run DriveNav script on startup\n\n[Service]\nExecStart=/usr/bin/python3 /home/pi/DriveNav/$SCRIPT_NAME\nWorkingDirectory=/home/pi/DriveNav\nRestart=always\nUser=pi\n\n[Install]\nWantedBy=multi-user.target"
 
 # Get the latest release information using GitHub API
 LATEST_RELEASE_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
