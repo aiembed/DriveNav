@@ -19,7 +19,7 @@ install_jq
 # Define variables
 OWNER="aiembed"
 REPO="DriveNav"
-SCRIPT_NAME="start.py"
+SCRIPT_NAME="main.py"
 SERVICE_NAME="myscript.service"
 SERVICE_CONTENT="[Unit]\nDescription=My Script Service\nAfter=multi-user.target\n\n[Service]\nType=idle\nExecStart=/usr/bin/python3 /home/pi/DriveNav/$SCRIPT_NAME\n\n[Install]\nWantedBy=multi-user.target"
 
@@ -28,7 +28,7 @@ LATEST_RELEASE_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
 LATEST_RELEASE=$(curl -s "$LATEST_RELEASE_URL" | jq -r '.tag_name')
 
 # Construct the download URL for the Python script
-SCRIPT_URL="https://raw.githubusercontent.com/$OWNER/$REPO/$LATEST_RELEASE/myscript.py"
+SCRIPT_URL="https://raw.githubusercontent.com/$OWNER/$REPO/$LATEST_RELEASE/main.py"
 
 # Change to the desired directory
 cd ~/DriveNav || exit
