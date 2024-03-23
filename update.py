@@ -30,7 +30,10 @@ def update_package(owner, repo):
             print("Package is already up to date.")
     else:
         print("Failed to fetch the latest release information.")
-
+        # Download and install the package if it doesn't exist
+        print("Downloading and installing the package...")
+        subprocess.run(["pip", "install", f"git+https://github.com/{owner}/{repo}.git"])
+        print("Package installed successfully.")
 
 def get_installed_version():
     # Assuming setup.py is in the same directory as update.py
