@@ -18,10 +18,11 @@ def update_package(owner, repo):
     if latest_version:
         installed_version = get_installed_version()
         if installed_version != latest_version:
-            # Construct package specifier
-            package_specifier = f"{repo}=={latest_version}"
-            # Perform the update process
-            subprocess.run(["pip", "install", "--upgrade", package_specifier])
+            # Construct URL for downloading the released version
+            package_url = f"https://github.com/{owner}/{repo}/archive/{latest_version}.tar.gz"
+            # Download the package
+            print(f"Downloading {repo} version {latest_version} from GitHub...")
+            subprocess.run(["pip", "install", "--upgrade", package_url])
             print("Package updated successfully!")
             # Reboot the Raspberry Pi
             print("Rebooting the system...")
@@ -30,10 +31,8 @@ def update_package(owner, repo):
             print("Package is already up to date.")
     else:
         print("Failed to fetch the latest release information.")
-        # Download and install the package if it doesn't exist
-        print("Downloading and installing the package...")
-        subprocess.run(["pip", "install", f"git+https://github.com/{owner}/{repo}.git"])
-        print("Package installed successfully.")
+        # Print error message and exit
+        print("Unable to update package as latest version information is not available.")
 
 def get_installed_version():
     # Assuming setup.py is in the same directory as update.py
