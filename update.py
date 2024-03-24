@@ -18,10 +18,10 @@ def update_package(owner, repo):
     if latest_version:
         installed_version = get_installed_version()
         if installed_version != latest_version:
-            # Construct download URL for the release
-            download_url = f"https://github.com/{owner}/{repo}/archive/{latest_version}.zip"
-            # Perform the download and installation process
-            subprocess.run(["pip", "install", "--upgrade", download_url])
+            # Construct package specifier
+            package_specifier = f"{repo}=={latest_version}"
+            # Perform the update process
+            subprocess.run(["pip", "install", "--upgrade", package_specifier])
             print("Package updated successfully!")
             # Reboot the Raspberry Pi
             print("Rebooting the system...")
