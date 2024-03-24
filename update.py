@@ -2,7 +2,8 @@ import requests
 import subprocess
 import os
 import time
-import ast  # Add this line to import the ast module
+import shutil
+import ast
 
 def get_latest_release(owner, repo):
     url = f"https://api.github.com/repos/{owner}/{repo}/releases/latest"
@@ -18,6 +19,9 @@ def update_package(owner, repo):
     if latest_version:
         installed_version = get_installed_version()
         if installed_version != latest_version:
+            # Backup Data/ folder
+            backup_data_folder()
+            
             # Construct URL for downloading the released version
             package_url = f"https://github.com/{owner}/{repo}/archive/{latest_version}.tar.gz"
             # Download the package
@@ -48,6 +52,17 @@ def get_installed_version():
                             return node.value.s
     return None
 
+def backup_data_folder():
+    data_folder = os.path.join(os.path.dirname(__file__), "Data")
+    if os.path.exists(data_folder):
+        # Create a backup folder
+        backup_folder = os.path.join(os.path.dirname(__file__), "Data_Backup")
+        if not os.path.exists(backup_folder):
+            os.makedirs(backup_folder)
+        # Copy data to backup folder
+        for root, dirs, files in os.walk(data_folder):
+            for file in files:
+                shutil.copy2(os.path.join(root, file), backup_folder)
 
 if __name__ == "__main__":
     # Replace these with your GitHub repository details
