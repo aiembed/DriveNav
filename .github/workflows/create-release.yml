@@ -11,10 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:20
-      permissions:
-        contents: read
-        /path/to/writeable/directory: write
-        /path/to/another/writeable/directory: write
 
     steps:
       - name: Checkout code
