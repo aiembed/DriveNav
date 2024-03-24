@@ -20,12 +20,10 @@ install_jq
 OWNER="aiembed"
 REPO="DriveNav"
 SCRIPT_NAME="start.py"
-SERVICE_NAME="myscript.service"
-SERVICE_CONTENT="[Unit]\nDescription=Run DriveNav script on startup\n\n[Service]\nExecStart=/usr/bin/python3 /home/pi/DriveNav/$SCRIPT_NAME\nWorkingDirectory=/home/pi/DriveNav\nRestart=always\nUser=pi\n\n[Install]\nWantedBy=multi-user.target"
+SERVICE_NAME="drivenav.service"
 
 # Get the latest release information using GitHub API
-LATEST_RELEASE_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
-LATEST_RELEASE=$(curl -s "$LATEST_RELEASE_URL" | jq -r '.tag_name')
+LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$OWNER/$REPO/releases/latest" | jq -r '.tag_name')
 
 # Construct the download URL for the Python script
 SCRIPT_URL="https://raw.githubusercontent.com/$OWNER/$REPO/$LATEST_RELEASE/$SCRIPT_NAME"
@@ -51,7 +49,19 @@ fi
 chmod +x "$SCRIPT_NAME"
 
 # Create the systemd service file
-echo -e "$SERVICE_CONTENT" | sudo tee "/etc/systemd/system/$SERVICE_NAME" > /dev/null
+cat <<EOF | sudo tee "/etc/systemd/system/$SERVICE_NAME" > /dev/null
+[Unit]
+Description=Run DriveNav script on startup
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/DriveNav/$SCRIPT_NAME
+WorkingDirectory=/home/pi/DriveNav
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 # Reload systemd
 sudo systemctl daemon-reload
