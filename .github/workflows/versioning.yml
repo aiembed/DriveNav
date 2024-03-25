@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
+          architecture: x64
+          node-version: '20'  # Specify Node.js version 20
 
       - name: Install dependencies
         run: |
