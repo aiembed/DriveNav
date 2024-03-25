@@ -27,10 +27,12 @@ jobs:
 
       - name: Update version in setup.py
         run: |
-          python update_version.py
+          sed -i "s/version='.*'/version='$(git describe --tags --abbrev=0 | cut -c 2-)'/g" setup.py
 
       - name: Push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git add setup.py
+          git commit -m "Update version in setup.py"
           git push
