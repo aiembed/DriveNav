@@ -13,25 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v1
 
-      - name: Set up Python
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-          architecture: x64
+      - name: Set up Docker
+        uses: actions/setup-python@v2
 
-      - name: Install dependencies
+      - name: Run versioning
         run: |
-          pip install bumpversion  # Or any other required dependencies
-
-      - name: Bump version
-        run: bumpversion --commit --tag  # Adjust this command according to your versioning tool/script
-
-      - name: Update version in setup.py
-        run: |
+          docker run --rm -v $PWD:/app -w /app python:3.7-slim pip install bumpversion
+          docker run --rm -v $PWD:/app -w /app python:3.7-slim bumpversion --commit --tag
           sed -i "s/version='.*'/version='$(git describe --tags --abbrev=0 | cut -c 2-)'/g" setup.py
-
-      - name: Push changes
-        run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add setup.py
