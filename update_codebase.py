@@ -33,10 +33,13 @@ def update_package(owner, repo):
             print(f"Extracting {repo} version {latest_version}...")
             subprocess.run(["tar", "-xzf", package_tar_gz])
 
+            # Remove the existing DriveNav directory if it exists
+            if os.path.exists(repo):
+                shutil.rmtree(repo)
+
             # Copy the updated files to the DriveNav folder
             print(f"Updating {repo} in the virtual environment...")
-            shutil.rmtree(repo)  # Remove existing files
-            shutil.move(f"{repo}-{latest_version}", repo)  # Move updated files
+            shutil.move(f"{repo}-{latest_version}", ".")
 
             # Restore Data folder
             restore_data_folder()
@@ -50,6 +53,7 @@ def update_package(owner, repo):
             print("Package is already up to date.")
     else:
         print("Failed to fetch the latest release information.")
+
 
 def get_installed_version():
     # Assuming setup.py is in the same directory as update.py
