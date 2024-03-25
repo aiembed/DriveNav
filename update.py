@@ -35,7 +35,7 @@ def update_package(owner, repo):
 
             # Copy the updated files to the virtual environment
             print(f"Updating {repo} in the virtual environment...")
-            shutil.copytree(f"{repo}-{latest_version}/", "/path/to/your/virtual/env/lib/pythonX.X/site-packages/{repo}/")
+            shutil.copytree(f"{repo}-{latest_version}/", "venv/lib/python3.X/site-packages/{repo}/")
 
             # Clean up downloaded files
             print("Cleaning up...")
