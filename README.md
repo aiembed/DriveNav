@@ -1,5 +1,4 @@
-# DriveNav
-AI Augmented DriveNav
+# DriveNav: AI Augmented DriveNav
 
 
 sudo rm -rf DriveNav/
