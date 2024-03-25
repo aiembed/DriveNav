@@ -1,0 +1,36 @@
+name: Versioning
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          pip install bumpversion  # Or any other required dependencies
+
+      - name: Bump version
+        run: bumpversion --commit --tag  # Adjust this command according to your versioning tool/script
+
+      - name: Update version in setup.py
+        run: |
+          python update_version.py
+
+      - name: Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git push
