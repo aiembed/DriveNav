@@ -29,24 +29,26 @@ def update_package(owner, repo):
             package_tar_gz = f"{repo}-{latest_version}.tar.gz"
             subprocess.run(["wget", package_url, "-O", package_tar_gz])
 
-            # Install the downloaded package
-            print(f"Installing {repo} version {latest_version}...")
-            subprocess.run(["pip", "install", "--upgrade", package_tar_gz])
+            # Extract the downloaded package
+            print(f"Extracting {repo} version {latest_version}...")
+            subprocess.run(["tar", "-xzf", package_tar_gz])
 
-            # Clean up downloaded tar.gz file
+            # Copy the updated files to the virtual environment
+            print(f"Updating {repo} in the virtual environment...")
+            shutil.copytree(f"{repo}-{latest_version}/", "/path/to/your/virtual/env/lib/pythonX.X/site-packages/{repo}/")
+
+            # Clean up downloaded files
+            print("Cleaning up...")
             os.remove(package_tar_gz)
+            shutil.rmtree(f"{repo}-{latest_version}")
 
             print("Package updated successfully!")
-            # Reboot the Raspberry Pi
-            print("Rebooting the system...")
-            os.system("sudo reboot")
+            # Optionally, you can restart the application using the updated files
+
         else:
             print("Package is already up to date.")
     else:
         print("Failed to fetch the latest release information.")
-        # Print error message and exit
-        print("Unable to update package as latest version information is not available.")
-
 
 def get_installed_version():
     # Assuming setup.py is in the same directory as update.py
